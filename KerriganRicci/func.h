@@ -6,5 +6,7 @@ void copy();
 int strlen(char str[]);
 bool isLeap(int year);
 int atoi(char s[]);
+int htoi();
+char *itoh();
 char lower(char c);
 void countNumSymAndETC();

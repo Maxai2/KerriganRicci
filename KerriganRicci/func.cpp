@@ -2,6 +2,9 @@
 
 #define MAXLINE 1000
 
+int hCtoi(char c);
+char itoHc(int num);
+
 int getline()
 {
     int c, i;
@@ -75,14 +78,105 @@ char lower(char c)
 
 int htoi()
 {
-    int i = 0;
-    char
+    int i = 0, result = 0, k = 0, hNum = 0;
+    char hArray[10];
+    char c;
+
+    while ((c = getchar()) != '\n')
+    {
+        hArray[i++] = c;
+    }
+
+    hArray[i] = '\0';
+        
+    k = i - 1;
+    for (int j = 0; j < i; j++, k--) 
+    {
+        if (('a' <= hArray[j] && hArray[j] <= 'f') || ('A' <= hArray[j] && hArray[j] <= 'F'))
+        {
+            hNum = hCtoi(hArray[j]);
+            result += hNum * _pow(16, k);
+        }
+        else
+            result += (hArray[j] - '0') * _pow(16, k);
+    }
+
+    //printf("%s %i %i\n", hArray, i, result);
+
+    return result;
+}
+
+char *itoh()
+{
+    char hArray[10], numArr[10], c;
+    int num = 0, i = 0, j = 0, tempNum = 0;
+
+    while ((c = getchar()) != '\n')
+    {
+        numArr[j++] = c;
+    }
+
+    numArr[j] = '\0';
+
+    num = atoi(numArr);
+
+    int numCollection[15] = { 0 };
+    int index = 0;
 
     while (true)
     {
+        tempNum = num / 16;
 
+        if (tempNum == 0)
+        {
+            break;
+        }
+
+        numCollection[index++] = tempNum;
+
+        num /= 16;
     }
+
+    for (int k = index - 1; k >= 0; k--)
+    {
+
+
+        if (numCollection[k] < 10)
+        {
+            hArray[i++] = numCollection[k];
+        }
+        else if (10 <= numCollection[k] && numCollection[k] <= 15)
+        {
+            hArray[i++] = itoHc(numCollection[k]);
+        }
+    }
+
+    hArray[i] = '\0';
+
+    printf("%s", hArray);
+
+    return NULL;
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 void countNumSymAndETC()
 {
@@ -110,8 +204,49 @@ void countNumSymAndETC()
 
 }
 
+int hCtoi(char c)
+{
+    switch (c)
+    {
+        case 'a':
+        case 'A':
+            return 10;
+        case 'b':
+        case 'B':
+            return 11;
+        case 'c':
+        case 'C':
+            return 12;
+        case 'd':
+        case 'D':
+            return 13;
+        case 'e':
+        case 'E':
+            return 14;
+        case 'f':
+        case 'F':
+            return 15;
+    }
+}
 
-
+char itoHc(int num)
+{
+    switch (num)
+    {
+        case 10:
+            return 'A';
+        case 11:
+            return 'B';
+        case 12:
+            return 'C';
+        case 13:
+            return 'D';
+        case 14:
+            return 'E';
+        case 15:
+            return 'F';
+    }
+}
 
 
 
