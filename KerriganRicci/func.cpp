@@ -106,56 +106,55 @@ int htoi()
     return result;
 }
 
-char *itoh()
+void itoh()
 {
-    char hArray[10], numArr[10], c;
-    int num = 0, i = 0, j = 0, tempNum = 0;
+    char num[10], resultChar[10];
+    int i = 0, index = 0;
+    char c;
 
-    while ((c = getchar()) != '\n')
-    {
-        numArr[j++] = c;
+    while ((c = getchar()) != '\n') {
+        num[i++] = (int)c;
     }
 
-    numArr[j] = '\0';
+    num[i] = '\0';
+    int _num = atoi(num);
+    i = 0;
+    int delNum[10], tempNum = 0;
+    delNum[i++] = _num;
 
-    num = atoi(numArr);
-
-    int numCollection[15] = { 0 };
-    int index = 0;
-
-    while (true)
-    {
-        tempNum = num / 16;
-
-        if (tempNum == 0)
+    while (true) {
+        tempNum = _num / 16;
+        if (tempNum > 15)
         {
+            delNum[i++] = tempNum;
+            _num /= 16;
+        }
+        else
+        {
+            delNum[i] = tempNum;
+            resultChar[index++] = tempNum + '0';
             break;
         }
-
-        numCollection[index++] = tempNum;
-
-        num /= 16;
     }
 
-    for (int k = index - 1; k >= 0; k--)
-    {
+    int itoHcVal = 0, j = i - 1;
+    int tempSymb;
 
+    while (true) {
+        if (j == -1)
+            break;
 
-        if (numCollection[k] < 10)
-        {
-            hArray[i++] = numCollection[k];
-        }
-        else if (10 <= numCollection[k] && numCollection[k] <= 15)
-        {
-            hArray[i++] = itoHc(numCollection[k]);
-        }
+        itoHcVal = delNum[j--] - (delNum[i--] * 16);
+
+        if (10 <= itoHcVal && itoHcVal <= 15)
+            resultChar[index++] = itoHc(itoHcVal);
+        else
+            resultChar[index++] = itoHcVal + '0';
     }
 
-    hArray[i] = '\0';
+    resultChar[index] = '\0';
 
-    printf("%s", hArray);
-
-    return NULL;
+    printf("%s\n", resultChar);
 }
 
 
