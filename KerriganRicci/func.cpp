@@ -76,6 +76,32 @@ char lower(char c)
         return c;
 }
 
+int htoi(char *s)
+{
+	int res = 0;
+
+	while (*s)
+	{
+		char c = *s++;
+
+		if (c >= '0' && c <= '9')
+			c -= '0';
+		else
+		if (c >= 'A' && c <= 'F')
+			c = c - 'A' + 10;
+		else
+		if (c >= 'a' && c <= 'f')
+			c = c - 'a' + 10;
+		else
+			return res;
+
+		res <<= 4;
+		res += c;
+	}
+
+	return res;
+}
+
 int htoi()
 {
     int i = 0, result = 0, k = 0, hNum = 0;
@@ -104,6 +130,23 @@ int htoi()
     //printf("%s %i %i\n", hArray, i, result);
 
     return result;
+}
+
+char *itoh(int num)
+{
+	static char resultChar[] = "00000000";
+	static char Hex[] = "0123456789ABCDEF";
+
+	int index = sizeof(resultChar)-1;
+
+	do
+	{
+		resultChar[--index] = Hex[num & 0xF];
+		num >>= 4;
+	}
+	while (num);
+
+	return &resultChar[index];
 }
 
 void itoh()
